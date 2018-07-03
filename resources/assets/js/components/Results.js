@@ -26,6 +26,7 @@ export default class Results extends Component {
 
     render() {
         const { countries } = this.props;
+        console.log(countries);
         const { mapDataToCountryCards } = this;
         return (mapDataToCountryCards(countries));
     }

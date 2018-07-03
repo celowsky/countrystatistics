@@ -5,7 +5,7 @@ import Results from './Results';
 
 export default class CountryForm extends Component {
     render() {
-        const { searchString, handleChange, handleSubmit, handleUpdate } = this.props;
+        const { countries, searchString, handleChange, handleSubmit } = this.props;
         return (
             <div className="form-area">
                 <p>
@@ -16,7 +16,7 @@ This is the country form
                     searchString={searchString}
                 />
                 <SubmitButton handleSubmit={handleSubmit} />
-                <Results handleUpdate={handleUpdate} />
+                <Results countries={countries} />
             </div>
         );
     }
