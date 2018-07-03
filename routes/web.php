@@ -12,3 +12,4 @@
 */
 
 Route::get('/', 'CountryController@index');
+Route::post('/searchForCountry', 'CountryController@searchForCountry');

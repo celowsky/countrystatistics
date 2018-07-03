@@ -1,8 +1,34 @@
-export function beginSubmit(searchString) {
+import axios from 'axios';
+
+export function beginSubmit() {
     return {
         type: 'BEGIN_SUBMIT',
-        searchString,
         isFetching: true,
+    };
+}
+
+export function submitSuccess(data) {
+    return {
+        type: 'SUBMIT_SUCCESS',
+        data,
+        isFetching: false,
+    };
+}
+
+export function submitForm(searchString) {
+    return function thunk(dispatch) {
+        dispatch(beginSubmit);
+        axios.post('/searchForCountry', searchString)
+            .then((response) => {
+                dispatch(submitSuccess(response.data));
+            }).catch((error) => {
+                console.log(error);
+            });
+        return {
+            type: 'BEGIN_SUBMIT',
+            searchString,
+            isFetching: true,
+        };
     };
 }
 

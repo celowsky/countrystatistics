@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import CountryForm from './CountryForm';
 
 import {
-    beginSubmit,
     changeSearchString,
+    submitForm,
 } from '../actions';
 
 class App extends Component {
@@ -22,7 +22,7 @@ class App extends Component {
     handleSubmit(e) {
         e.preventDefault();
         const { dispatch, searchString } = this.props;
-        dispatch(beginSubmit(searchString));
+        dispatch(submitForm(searchString));
     }
 
     render() {
