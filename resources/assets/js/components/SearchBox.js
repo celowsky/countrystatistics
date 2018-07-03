@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 export default class SearchBox extends Component {
+    constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(e) {
+        const { handleChange } = this.props;
+        handleChange(e.target.value);
+    }
+
     render() {
+        const { handleChange } = this;
+        const { searchString } = this.props;
         return (
-            <p>
-This is the search box
-            </p>
+            <input type="text" onChange={handleChange} value={searchString} />
         );
     }
 }

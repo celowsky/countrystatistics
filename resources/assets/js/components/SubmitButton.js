@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 
 export default class SubmitButton extends Component {
     render() {
+        const { handleSubmit } = this.props;
         return (
-            <p>
-This is the submit button
-            </p>
+            <input type="submit" value="Submit" onClick={handleSubmit} />
         );
     }
 }
