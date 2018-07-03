@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Promise;
 use Illuminate\Http\Request;
 
 class CountryController extends Controller
@@ -29,18 +30,18 @@ class CountryController extends Controller
     {
         $client = $this->client;
         $searchString = $request->getContent();
-        $response = [
-            [
-                'name' => 'Afghanistan',
-                'alpha2Code' => 'AF',
-                'alpha3Code' => 'AFG',
-            ],
+
+        $promises = [
+            'countryName' => $client->requestAsync('GET', self::BASE_URL.'/name/'.$searchString),
+            'code' => $client->requestAsync('GET', self::BASE_URL.'/alpha/'.$searchString),
         ];
 
+        // Waits for all requests to complete and throws a ConnectException if any requests fail.
+        $results = Promise\unwrap($promises);
 
-        $response = $client->request('GET', self::BASE_URL.'/name/'.$searchString);
         // @TODO: Make sure to handle case where nothing is returned
-        $responseBody = json_decode($response->getBody()->getContents(), true);
+        $countryNameResponse = json_decode($results['countryName']->getBody()->getContents(), true);
+        $codeResponse = json_decode($results['code']->getBody()->getContents(), true);
         $countries = array_map(function($country) {
             return [
                 'fullName' => $country['name'],
@@ -54,7 +55,24 @@ class CountryController extends Controller
                     return $language['name'];
                 }, $country['languages']),
             ];
-        }, $responseBody);
+        }, $countryNameResponse);
+
+        // Add results from country code query
+        if ($codeResponse != null) {
+            $countries[] =
+                [
+                    'fullName' => $codeResponse['name'],
+                    'alphaCode2' => $codeResponse['alpha2Code'],
+                    'alphaCode3' => $codeResponse['alpha3Code'],
+                    'flagImage' => $codeResponse['flag'],
+                    'region' => $codeResponse['region'],
+                    'subregion' => $codeResponse['subregion'],
+                    'population' => $codeResponse['population'],
+                    'languages' => array_map(function($language) {
+                        return $language['name'];
+                    }, $codeResponse['languages']),
+                ];
+        }
         usort($countries, function($a, $b) {
             return strcmp($a['fullName'], $b['fullName']);
         });
