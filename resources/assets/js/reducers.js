@@ -4,7 +4,9 @@ export default function mainReducer(state = {}, action) {
             console.log(action.searchString);
             return { ...state, searchString: action.searchString };
         case 'BEGIN_SUBMIT':
-            return { ...state, isFetching: action.isFetching }
+            return { ...state, isFetching: action.isFetching };
+        case 'SUBMIT_SUCCESS':
+            return { ...state, countries: action.data, isFetching: false };
         default:
             return state;
     }

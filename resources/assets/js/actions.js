@@ -24,11 +24,6 @@ export function submitForm(searchString) {
             }).catch((error) => {
                 console.log(error);
             });
-        return {
-            type: 'BEGIN_SUBMIT',
-            searchString,
-            isFetching: true,
-        };
     };
 }
 

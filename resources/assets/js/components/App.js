@@ -5,6 +5,7 @@ import CountryForm from './CountryForm';
 import {
     changeSearchString,
     submitForm,
+    displayResults,
 } from '../actions';
 
 class App extends Component {
@@ -12,6 +13,7 @@ class App extends Component {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
     }
 
     handleChange(searchString) {
@@ -27,7 +29,7 @@ class App extends Component {
 
     render() {
         const { searchString } = this.props;
-        const { handleChange, handleSubmit } = this;
+        const { handleChange, handleSubmit, handleUpdate } = this;
         return (
             <div className="container">
                 <div className="row justify-content-center">
