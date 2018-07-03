@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import CountryForm from './CountryForm';
 
 class App extends Component {
     render() {
@@ -7,11 +9,10 @@ class App extends Component {
                 <div className="row justify-content-center">
                     <div className="col-md-8">
                         <div className="card">
-                            <div className="card-header">Example Component</div>
-
-                            <div className="card-body">
-                                I'm an example component!
+                            <div className="card-header">
+Hello, world!
                             </div>
+                            <CountryForm />
                         </div>
                     </div>
                 </div>
