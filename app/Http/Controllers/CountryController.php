@@ -70,7 +70,7 @@ class CountryController extends Controller
         }
 
         // Add results from country full name query
-        foreach ($countryNameResponse as $country) {
+        foreach ($countryFullNameResponse as $country) {
             if (!isset($countryList[$country['name']])) {
                 $countryList[$country['name']] = true;
                 $countries[] = [
