@@ -29,7 +29,7 @@ class App extends Component {
     }
 
     render() {
-        const { searchString, countries } = this.props;
+        const { searchString, countries, statistics } = this.props;
         const { handleChange, handleSubmit } = this;
         return (
             <div className="container">
@@ -43,7 +43,7 @@ class App extends Component {
                         />
                     </div>
                     <div className="col-md-8">
-                        {/*<CountryStatistics />*/}
+                        <CountryStatistics statistics={statistics} />
                     </div>
                 </div>
             </div>
