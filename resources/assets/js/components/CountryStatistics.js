@@ -10,10 +10,10 @@ export default class CountryStatistics extends Component {
         const { totalNumberOfCountries, regions, subregions } = statistics;
         return (
             <div className="card col-xs-12">
-                <h5 className="card-title p-2">
-                    Total Countries Found: {totalNumberOfCountries}
-                </h5>
                 <div className="card-header">
+                    Total Countries Found: {totalNumberOfCountries}
+                </div>
+                <div className="card-header mt-2">
                     Region Count
                 </div>
                 <ul className="list-group">
@@ -23,7 +23,7 @@ export default class CountryStatistics extends Component {
                         })
                     }
                 </ul>
-                <div className="card-header">
+                <div className="card-header mt-2">
                     Subregion Count
                 </div>
                 <ul className="list-group">

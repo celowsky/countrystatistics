@@ -44,7 +44,7 @@ class App extends Component {
                     </div>
                 </div>
                 <div className="row justify-content-center">
-                    <div className="card-holder mt-5 col-xs-12">
+                    <div className="card-holder mt-5 mb-3 col-md-8">
                         <CountryStatistics statistics={statistics} />
                     </div>
                 </div>
