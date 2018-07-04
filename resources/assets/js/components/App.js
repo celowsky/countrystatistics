@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import CountryForm from './CountryForm';
-
+import CountryStatistics from './CountryStatistics';
+import ErrorHeader from './ErrorHeader';
+import Results from './Results';
 import {
     changeSearchString,
     submitForm,
-    // displayResults,
 } from '../actions';
-import CountryStatistics from "./CountryStatistics";
-import ErrorHeader from "./ErrorHeader";
+
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        // this.handleUpdate = this.handleUpdate.bind(this);
     }
 
     handleChange(searchString) {
@@ -45,6 +44,12 @@ class App extends Component {
                             searchString={searchString}
                             handleChange={handleChange}
                             handleSubmit={handleSubmit}
+                        />
+                    </div>
+                </div>
+                <div className="row justify-content-center">
+                    <div className="col-md-8">
+                        <Results
                             countries={countries}
                         />
                     </div>

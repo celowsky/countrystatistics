@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import SearchBox from './SearchBox';
 import SubmitButton from './SubmitButton';
-import Results from './Results';
 
 export default class CountryForm extends Component {
     render() {
-        const { countries, searchString, handleChange, handleSubmit } = this.props;
+        const { searchString, handleChange, handleSubmit } = this.props;
         return (
             <form>
                 <div className="form-group">
@@ -14,7 +13,6 @@ export default class CountryForm extends Component {
                         searchString={searchString}
                     />
                     <SubmitButton handleSubmit={handleSubmit} />
-                    <Results countries={countries} />
                 </div>
             </form>
         );
