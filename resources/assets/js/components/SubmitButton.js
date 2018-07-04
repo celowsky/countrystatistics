@@ -5,7 +5,7 @@ export default class SubmitButton extends Component {
     render() {
         const { handleSubmit } = this.props;
         return (
-            <input type="submit" value="Submit" onClick={handleSubmit} />
+            <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Submit</button>
         );
     }
 }

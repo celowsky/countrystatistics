@@ -15,7 +15,9 @@ export default class SearchBox extends Component {
         const { handleChange } = this;
         const { searchString } = this.props;
         return (
-            <input type="text" onChange={handleChange} value={searchString} />
+            <label className="text-center" htmlFor="search-box-text">Search by name, full name, or country code
+                <input className="form-control" id="search-box-text" type="text" onChange={handleChange} value={searchString} />
+            </label>
         );
     }
 }
