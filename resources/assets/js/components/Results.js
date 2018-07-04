@@ -10,17 +10,16 @@ export default class Results extends Component {
 
     mapDataToCountryCards(data) {
         if (data) {
-            return data.map((country) => {
+            return data.map((country, index) => {
                 return (
                     <CountryCard
                         countryData={country}
+                        key={country + index}
                     />
                 );
             });
         } else {
-            return (
-                <p>Results will display here</p>
-            );
+            return null;
         }
     }
 

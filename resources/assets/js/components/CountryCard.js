@@ -33,9 +33,9 @@ export default class CountryCard extends Component {
                             Languages
                         </div>
                         <ul className="list-group">
-                            {languages.map((language) => {
+                            {languages.map((language, index) => {
                                 return (
-                                    <li className="list-group-item">{language}</li>
+                                    <li className="list-group-item" key={language + index + fullName}>{language}</li>
                                 );
                             })}
                         </ul>

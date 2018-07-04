@@ -13,7 +13,7 @@ export default class CountryStatistics extends Component {
             return '';
         } else {
             return Object.keys(regions).map(function(keyName, keyIndex) {
-                return (<li className="list-group-item">{keyName}: {regions[keyName]}</li>);
+                return (<li className="list-group-item" key={keyName + keyIndex + regions[keyName]}>{keyName}: {regions[keyName]}</li>);
             });
         }
     }
@@ -24,7 +24,7 @@ export default class CountryStatistics extends Component {
             return '';
         } else {
             return Object.keys(subregions).map(function(keyName, keyIndex) {
-                return (<li className="list-group-item">{keyName}: {subregions[keyName]}</li>);
+                return (<li className="list-group-item" key={keyName + keyIndex + subregions[keyName]}>{keyName}: {subregions[keyName]}</li>);
             });
         }
     }
