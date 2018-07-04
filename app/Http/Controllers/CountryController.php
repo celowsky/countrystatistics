@@ -45,17 +45,17 @@ class CountryController extends Controller
             'code' => $client->requestAsync('GET', self::BASE_URL.'/alpha/'.$searchString),
         ];
 
-        // Waits for all requests to complete and throws a ConnectException if any requests fail.
+        // Waits for all requests to complete, even if some fail
         try {
-            $results = Promise\unwrap($promises);
+            $results = Promise\settle($promises)->wait();
         } catch (RequestException $e) {
-            return response()->json('Could not find any results for search '.$request->getContent(), Response::HTTP_NOT_FOUND);
+            return response()->json('Could not find any results for search "'.$request->getContent().'"', Response::HTTP_NOT_FOUND);
         }
 
         // @TODO: Make sure to handle case where nothing is returned
-        $countryNameResponse = json_decode($results['countryName']->getBody()->getContents(), true);
-        $countryFullNameResponse = json_decode($results['countryFullName']->getBody()->getContents(), true);
-        $codeResponse = json_decode($results['code']->getBody()->getContents(), true);
+        $countryNameResponse = $results['countryName']['state'] === 'fulfilled' ? json_decode($results['countryName']['value']->getBody()->getContents(), true) : [];
+        $countryFullNameResponse = $results['countryFullName']['state'] === 'fulfilled' ? json_decode($results['countryFullName']['value']->getBody()->getContents(), true) : [];
+        $codeResponse = $results['code']['state'] === 'fulfilled' ? json_decode($results['code']['value']->getBody()->getContents(), true) : [];
 
         // Build out a hashmap of countries already added to this API response as they are added to the response.
         // Lookup time is much faster than using in_array.
@@ -84,17 +84,17 @@ class CountryController extends Controller
             ];
 
             // Calculate number of occurences for region
-            if (!isset($statistics['regions'][$codeResponse['region']])) {
-                $statistics['regions'][$codeResponse['region']] = 0;
+            if (!isset($statistics['regions'][$country['region']])) {
+                $statistics['regions'][$country['region']] = 0;
             } else {
-                $statistics['regions'][$codeResponse['region']] += 1;
+                $statistics['regions'][$country['region']] += 1;
             }
 
             // Calculate number of occurences for subregion
-            if (!isset($statistics['subregions'][$codeResponse['subregion']])) {
-                $statistics['subregions'][$codeResponse['subregion']] = 0;
+            if (!isset($statistics['subregions'][$country['subregion']])) {
+                $statistics['subregions'][$country['subregion']] = 0;
             } else {
-                $statistics['subregions'][$codeResponse['subregion']] += 1;
+                $statistics['subregions'][$country['subregion']] += 1;
             }
         }
 
@@ -117,17 +117,17 @@ class CountryController extends Controller
             }
 
             // Calculate number of occurences for region
-            if (!isset($statistics['regions'][$codeResponse['region']])) {
-                $statistics['regions'][$codeResponse['region']] = 0;
+            if (!isset($statistics['regions'][$country['region']])) {
+                $statistics['regions'][$country['region']] = 0;
             } else {
-                $statistics['regions'][$codeResponse['region']] += 1;
+                $statistics['regions'][$country['region']] += 1;
             }
 
             // Calculate number of occurences for subregion
-            if (!isset($statistics['subregions'][$codeResponse['subregion']])) {
-                $statistics['subregions'][$codeResponse['subregion']] = 0;
+            if (!isset($statistics['subregions'][$country['subregion']])) {
+                $statistics['subregions'][$country['subregion']] = 0;
             } else {
-                $statistics['subregions'][$codeResponse['subregion']] += 1;
+                $statistics['subregions'][$country['subregion']] += 1;
             }
         }
 
