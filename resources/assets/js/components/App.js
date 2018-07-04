@@ -41,6 +41,9 @@ class App extends Component {
                             countries={countries}
                         />
                     </div>
+                    <div className="col-md-8">
+                        {/* Add statistics */}
+                    </div>
                 </div>
             </div>
         );
