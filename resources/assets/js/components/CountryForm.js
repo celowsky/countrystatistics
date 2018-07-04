@@ -8,9 +8,7 @@ export default class CountryForm extends Component {
         const { countries, searchString, handleChange, handleSubmit } = this.props;
         return (
             <div className="form-area">
-                <p>
-This is the country form
-                </p>
+                <h6>Search by name, full name, or country code</h6>
                 <SearchBox
                     handleChange={handleChange}
                     searchString={searchString}

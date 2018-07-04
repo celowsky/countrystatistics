@@ -34,14 +34,12 @@ class App extends Component {
             <div className="container">
                 <div className="row justify-content-center">
                     <div className="col-md-8">
-                        <div className="card">
-                            <CountryForm
-                                searchString={searchString}
-                                handleChange={handleChange}
-                                handleSubmit={handleSubmit}
-                                countries={countries}
-                            />
-                        </div>
+                        <CountryForm
+                            searchString={searchString}
+                            handleChange={handleChange}
+                            handleSubmit={handleSubmit}
+                            countries={countries}
+                        />
                     </div>
                 </div>
             </div>
