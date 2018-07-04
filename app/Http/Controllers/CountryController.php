@@ -46,13 +46,22 @@ class CountryController extends Controller
         ];
 
         // Waits for all requests to complete, even if some fail
-        try {
-            $results = Promise\settle($promises)->wait();
-        } catch (RequestException $e) {
-            return response()->json('Could not find any results for search "'.$request->getContent().'"', Response::HTTP_NOT_FOUND);
+        $results = Promise\settle($promises)->wait();
+
+        // If all requests failed, make sure to send back a response indicating no results were found
+        $promiseStates = array_map(function($promise) {
+            return $promise['state'];
+        }, $results);
+        $rejectCount = 0;
+        foreach ($promiseStates as $state) {
+            if ($state === 'rejected') {
+                $rejectCount++;
+            }
+        }
+        if ($rejectCount >= 3) {
+            return response()->json('No results found for search "'.$request->getContent().'"', Response::HTTP_NOT_FOUND);
         }
 
-        // @TODO: Make sure to handle case where nothing is returned
         $countryNameResponse = $results['countryName']['state'] === 'fulfilled' ? json_decode($results['countryName']['value']->getBody()->getContents(), true) : [];
         $countryFullNameResponse = $results['countryFullName']['state'] === 'fulfilled' ? json_decode($results['countryFullName']['value']->getBody()->getContents(), true) : [];
         $codeResponse = $results['code']['state'] === 'fulfilled' ? json_decode($results['code']['value']->getBody()->getContents(), true) : [];
