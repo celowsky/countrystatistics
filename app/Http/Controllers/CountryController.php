@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CountryController extends Controller
 {
@@ -29,6 +32,7 @@ class CountryController extends Controller
     public function searchForCountry(Request $request)
     {
         $client = $this->client;
+
         // Makes search string url-safe via plain Percent-Encoding instead of application/x-www-form-urlencoded
         // See, https://stackoverflow.com/questions/4744888/how-to-properly-url-encode-a-string-in-php
         $searchString = rawurlencode($request->getContent());
@@ -42,7 +46,11 @@ class CountryController extends Controller
         ];
 
         // Waits for all requests to complete and throws a ConnectException if any requests fail.
-        $results = Promise\unwrap($promises);
+        try {
+            $results = Promise\unwrap($promises);
+        } catch (RequestException $e) {
+            return response()->json('Could not find any results for search '.$request->getContent(), Response::HTTP_NOT_FOUND);
+        }
 
         // @TODO: Make sure to handle case where nothing is returned
         $countryNameResponse = json_decode($results['countryName']->getBody()->getContents(), true);
@@ -53,7 +61,6 @@ class CountryController extends Controller
         // Lookup time is much faster than using in_array.
         $countryList = [];
 
-        // Holds statistical info
         $statistics = [
             'totalNumberOfCountries' => 0,
             'regions' => [],

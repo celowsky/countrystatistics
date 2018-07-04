@@ -8,6 +8,7 @@ import {
     // displayResults,
 } from '../actions';
 import CountryStatistics from "./CountryStatistics";
+import ErrorHeader from "./ErrorHeader";
 
 class App extends Component {
     constructor(props) {
@@ -29,10 +30,15 @@ class App extends Component {
     }
 
     render() {
-        const { searchString, countries, statistics } = this.props;
+        const { countries, error, searchString, statistics } = this.props;
         const { handleChange, handleSubmit } = this;
         return (
             <div className="container">
+                <div className="row justify-content-center">
+                    <div className="col-md-8">
+                        <ErrorHeader error={error} />
+                    </div>
+                </div>
                 <div className="row justify-content-center">
                     <div className="col-md-8 mt-3">
                         <CountryForm

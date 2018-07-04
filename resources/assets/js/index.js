@@ -19,6 +19,7 @@ const initialState = {
     },
     searchString: '',
     isFetching: false,
+    error: '',
 };
 
 const store = createStore(

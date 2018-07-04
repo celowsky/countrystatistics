@@ -15,6 +15,14 @@ export function submitSuccess(data) {
     };
 }
 
+export function submitError(error) {
+    return {
+        type: 'SUBMIT_ERROR',
+        error,
+        isFetching: false,
+    };
+}
+
 export function submitForm(searchString) {
     return function thunk(dispatch) {
         dispatch(beginSubmit);
@@ -22,7 +30,11 @@ export function submitForm(searchString) {
             .then((response) => {
                 dispatch(submitSuccess(response.data));
             }).catch((error) => {
-                console.log(error);
+                if (error.response) {
+                    dispatch(submitError(error.response.data));
+                } else if (error.request) {
+                    // Do something
+                }
             });
     };
 }
