@@ -12,38 +12,36 @@ export default class CountryCard extends Component {
         return (
             <div className="card-holder mt-3 col-xs-12">
                 <div className="card col-xs-12">
-                    <div className="country-full-name col-xs-12">
-                        <h3 className="text-center">{fullName}</h3>
-                    </div>
-                    <div className="flag-image col-xs-12">
-                        <img src={flagImage} className="img-fluid" alt={`Flag of country ${fullName}`} />
-                    </div>
-                    <div className="country-codes col-xs-6">
-                        <h5><strong>Country Codes</strong></h5>
-                        <ul className="list-group col-xs-12">
-                            <li className="list-group-item col-xs-6">{alphaCode2}</li>
-                            <li className="list-group-item col-xs-6">{alphaCode3}</li>
+                    <img src={flagImage} className="card-img-top" alt={`Flag of country ${fullName}`} />
+                    <div className="card-body">
+                        <h3 className="card-title"><strong>{fullName}</strong></h3>
+                        <div className="card-header">
+                            Country Codes
+                        </div>
+                        <ul className="list-group">
+                            <li className="list-group-item">{alphaCode2}</li>
+                            <li className="list-group-item">{alphaCode3}</li>
                         </ul>
-                    </div>
-                    <div className="region col-xs-6">
-                        <h5><strong>Region Info</strong></h5>
-                        <ul className="list-group col-xs-12">
-                            <li className="list-group-item col-xs-6">{region}</li>
-                            <li className="list-group-item col-xs-6">{subregion}</li>
+                        <div className="card-header mt-2">
+                            Region Info
+                        </div>
+                        <ul className="list-group">
+                            <li className="list-group-item">Region: {region}</li>
+                            <li className="list-group-item">Subregion(s): {subregion}</li>
                         </ul>
-                    </div>
-                    <div className="population col-xs-6">
-                        <h5><strong>Population: </strong>{population}</h5>
-                    </div>
-                    <div className="languages col-xs-6">
-                        <h5><strong>Languages</strong></h5>
-                        <ul className="list-group col-xs-12">
+                        <div className="card-header mt-2">
+                            Languages
+                        </div>
+                        <ul className="list-group">
                             {languages.map((language) => {
                                 return (
-                                    <li className="list-group-item col-xs-6">{language}</li>
+                                    <li className="list-group-item">{language}</li>
                                 );
                             })}
                         </ul>
+                        <div className="card-text text-muted text-right">
+                            Population: {population}
+                        </div>
                     </div>
                 </div>
             </div>
