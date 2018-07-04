@@ -12,6 +12,11 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const initialState = {
     countries: [],
+    statistics: {
+        totalNumberOfCountries: 0,
+        regions: {},
+        subregions: {},
+    },
     searchString: '',
     isFetching: false,
 };

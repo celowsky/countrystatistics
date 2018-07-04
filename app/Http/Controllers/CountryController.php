@@ -51,8 +51,16 @@ class CountryController extends Controller
 
         // Build out a hashmap of countries already added to this API response as they are added to the response.
         // Lookup time is much faster than using in_array.
-        $countries = [];
         $countryList = [];
+
+        // Holds statistical info
+        $statistics = [
+            'totalNumberOfCountries' => 0,
+            'regions' => [],
+            'subregions' => [],
+        ];
+
+        $countries = [];
         foreach ($countryNameResponse as $country) {
             $countryList[$country['name']] = true;
             $countries[] = [
@@ -67,6 +75,20 @@ class CountryController extends Controller
                     return $language['name'];
                 }, $country['languages']),
             ];
+
+            // Calculate number of occurences for region
+            if (!isset($statistics['regions'][$codeResponse['region']])) {
+                $statistics['regions'][$codeResponse['region']] = 0;
+            } else {
+                $statistics['regions'][$codeResponse['region']] += 1;
+            }
+
+            // Calculate number of occurences for subregion
+            if (!isset($statistics['subregions'][$codeResponse['subregion']])) {
+                $statistics['subregions'][$codeResponse['subregion']] = 0;
+            } else {
+                $statistics['subregions'][$codeResponse['subregion']] += 1;
+            }
         }
 
         // Add results from country full name query
@@ -85,6 +107,20 @@ class CountryController extends Controller
                         return $language['name'];
                     }, $country['languages']),
                 ];
+            }
+
+            // Calculate number of occurences for region
+            if (!isset($statistics['regions'][$codeResponse['region']])) {
+                $statistics['regions'][$codeResponse['region']] = 0;
+            } else {
+                $statistics['regions'][$codeResponse['region']] += 1;
+            }
+
+            // Calculate number of occurences for subregion
+            if (!isset($statistics['subregions'][$codeResponse['subregion']])) {
+                $statistics['subregions'][$codeResponse['subregion']] = 0;
+            } else {
+                $statistics['subregions'][$codeResponse['subregion']] += 1;
             }
         }
 
@@ -106,12 +142,35 @@ class CountryController extends Controller
                         }, $codeResponse['languages']),
                     ];
             }
+
+            // Calculate number of occurrences for region
+            if (!isset($statistics['regions'][$codeResponse['region']])) {
+                $statistics['regions'][$codeResponse['region']] = 0;
+            } else {
+                $statistics['regions'][$codeResponse['region']] += 1;
+            }
+
+            // Calculate number of occurrences for subregion
+            if (!isset($statistics['subregions'][$codeResponse['subregion']])) {
+                $statistics['subregions'][$codeResponse['subregion']] = 0;
+            } else {
+                $statistics['subregions'][$codeResponse['subregion']] += 1;
+            }
         }
+
+        // Sort countries alphabetically by full name
         usort($countries, function($a, $b) {
             return strcmp($a['fullName'], $b['fullName']);
         });
 
-        // @TODO: Limit response size to 50
-        return response()->json($countries);
+        // Limit number of countries in response to 50
+        $limitedCountries = array_slice($countries, 0, 50);
+        $statistics['totalNumberOfCountries'] = count($limitedCountries);
+
+        $responseData = [
+            'countries' => $limitedCountries,
+            'statistics' => $statistics,
+        ];
+        return response()->json($responseData);
     }
 }

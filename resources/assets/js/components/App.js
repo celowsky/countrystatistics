@@ -7,6 +7,7 @@ import {
     submitForm,
     // displayResults,
 } from '../actions';
+import CountryStatistics from "./CountryStatistics";
 
 class App extends Component {
     constructor(props) {
@@ -42,7 +43,7 @@ class App extends Component {
                         />
                     </div>
                     <div className="col-md-8">
-                        {/* Add statistics */}
+                        {/*<CountryStatistics />*/}
                     </div>
                 </div>
             </div>
