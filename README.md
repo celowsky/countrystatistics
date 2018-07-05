@@ -3,13 +3,13 @@
 In order to run this application, please make sure you have the following packages installed on your
 host machine:
 - php >= 7.1
-- php 7.1-zip
-- php 7.1-curl
+- php-zip
+- php-curl
 - nodejs >= 8.9.4
 - npm >= 5.6.0
 
 ## Run the application
-After cloning the repository installing the prerequisite packages, navigate
+After cloning the repository and installing the **Prerequisite** packages, navigate
 to the project root and run the the following commands:
 1. `cp .env.example .env`
 2. `composer install`

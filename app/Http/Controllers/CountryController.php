@@ -175,7 +175,7 @@ class CountryController extends Controller
         }
 
         // Sort countries alphabetically by full name
-        // @TODO: Sort countries by population if name matches (not sure what they mean with "sorted by name and population"
+        // @TODO: Sort countries by population if name matches (not sure what they mean with "sorted by name and population")
         usort($countries, function($a, $b) {
             return strcmp($a['fullName'], $b['fullName']);
         });
