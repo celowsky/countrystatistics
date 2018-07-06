@@ -15,7 +15,8 @@ to the project root and run the the following commands:
 2. `composer install`
 3. `npm install`
 4. `npm run prod`
-5. `php artisan serve`
+5. `php artisan key:generate`
+6. `php artisan serve`
 
 After completing the steps above, navigate to `localhost:8000` in your browser
 to view the application. 
